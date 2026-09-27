@@ -2,401 +2,489 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IQ Test — Mantiqiy Test</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IQ Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(135deg,#080b18,#151b38);
-  color:white;
-  min-height:100vh;
+:root{
+  --bg:#14111f; --surface:#1e1a33; --surface2:#262040;
+  --text:#f3f1fb; --muted:#9d94c4; --accent:#8b5cf6; --accent2:#2dd4bf;
+  --gold:#f5b942; --border:#332c56;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
-.container{
-  width:min(900px,92%);
-  margin:auto;
-  padding:40px 0;
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f6f4fc; --surface:#ffffff; --surface2:#efebfa;
+    --text:#1c1830; --muted:#6a6190; --border:#e3ddf5;
+  }
 }
-.card{
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:24px;
-  padding:30px;
-  box-shadow:0 20px 60px rgba(0,0,0,.3);
-}
-h1{font-size:42px;margin:0 0 15px}
-h2{font-size:28px}
-p{color:#cbd2e8;line-height:1.6}
-.btn{
-  border:0;
-  border-radius:14px;
-  padding:15px 22px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  background:#6c63ff;
-  color:white;
-  margin-top:15px;
-}
-.btn:hover{opacity:.9}
-input{
-  width:100%;
-  padding:15px;
-  margin:8px 0;
-  border-radius:12px;
-  border:1px solid #444b70;
-  background:#11162b;
-  color:white;
-  font-size:16px;
-}
-.option{
-  display:block;
-  padding:16px;
-  margin:10px 0;
-  border:1px solid #414967;
-  border-radius:14px;
-  cursor:pointer;
-  background:#11162b;
-}
-.option:hover{background:#202849}
-.hidden{display:none}
-.badge{
-  display:inline-block;
-  padding:8px 13px;
-  border-radius:20px;
-  background:#292f55;
-  color:#bfc6ff;
-  margin-bottom:15px;
-}
-.score{
-  font-size:70px;
-  font-weight:bold;
-  text-align:center;
-  margin:20px 0;
-}
-.center{text-align:center}
-.rank{
-  font-size:25px;
-  font-weight:bold;
-}
-small{color:#9da6c5}
+:root[data-theme="dark"]{--bg:#14111f;--surface:#1e1a33;--surface2:#262040;--text:#f3f1fb;--muted:#9d94c4;--border:#332c56;}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;display:flex;justify-content:center;min-height:100%;}
+h1,h2,.score-num,.badge-num{font-family:'Fraunces',Georgia,serif;}
+.app{width:100%;max-width:460px;padding:28px 20px 40px;display:flex;flex-direction:column;min-height:100%;}
+.brand{font-size:13px;color:var(--muted);letter-spacing:.08em;margin-bottom:18px;}
+.progress-track{height:4px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-bottom:24px;}
+.progress-fill{height:100%;background:var(--accent2);width:0%;transition:width .35s ease;}
+.screen{display:none;flex:1;flex-direction:column;}
+.screen.active{display:flex;animation:rise .5s ease both;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+h1{font-size:28px;font-weight:600;line-height:1.18;margin:4px 0 10px;}
+p.lead{color:var(--muted);font-size:15px;line-height:1.55;margin:0 0 24px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px;margin-bottom:16px;}
+.btn{appearance:none;border:none;border-radius:13px;padding:16px 20px;font-family:'Inter';font-size:15px;font-weight:600;cursor:pointer;background:var(--accent);color:#fff;width:100%;}
+.btn:active{transform:translateY(1px);}
+.btn.secondary{background:transparent;border:1px solid var(--border);color:var(--text);}
+.btn:disabled{opacity:.6;}
+.btn:focus-visible{outline:2px solid var(--accent2);outline-offset:2px;}
+.field{width:100%;padding:14px 15px;border-radius:11px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:15px;margin-bottom:12px;font-family:'Inter';}
+.field:focus{outline:none;border-color:var(--accent);}
+.card-number{font-family:'Fraunces',Georgia,serif;font-size:22px;font-weight:600;letter-spacing:.04em;text-align:center;}
+.greet{background:var(--surface2);border-radius:14px;padding:14px 16px;margin-bottom:18px;font-size:14px;color:var(--text);}
+.greet b{color:var(--accent2);}
+.qnum{color:var(--muted);font-size:13px;margin-bottom:8px;}
+.diffdot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:6px;vertical-align:2px;}
+.qtext{font-size:19px;font-weight:600;margin:2px 0 22px;line-height:1.42;}
+.option{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:13px 15px;margin-bottom:10px;font-size:15px;color:var(--text);cursor:pointer;}
+.option.selected{border-color:var(--accent);background:var(--surface2);}
+.optletter{flex:none;width:28px;height:28px;border-radius:9px;background:var(--surface2);color:var(--muted);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.option.selected .optletter{background:var(--accent);color:#fff;}
+.spacer{flex:1;}
+.tier{display:inline-block;padding:7px 16px;border-radius:99px;background:var(--surface2);color:var(--accent2);font-size:14px;font-weight:600;margin-bottom:18px;}
+.blur-score{filter:blur(8px);user-select:none;font-size:60px;font-weight:700;text-align:center;margin:6px 0;}
+.score-num{font-size:60px;font-weight:700;text-align:center;margin:4px 0;color:var(--accent2);animation:pop .5s ease both;}
+@keyframes pop{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
+.center{text-align:center;}
+.rank-badge{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+.badge-num{font-size:22px;font-weight:700;color:#fff;}
+.note{font-size:12.5px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.55;}
+.breakdown-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border);font-size:14px;}
+.breakdown-row:last-child{border-bottom:none;}
+.hist-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--muted);}
+.hist-row:last-child{border-bottom:none;}
+.spinner{width:20px;height:20px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;display:inline-block;animation:spin .7s linear infinite;margin-right:8px;vertical-align:-4px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.cert{background:#141127;border:2px solid var(--gold);border-radius:6px;padding:6px;margin-bottom:18px;}
+.cert-inner{border:1px solid var(--gold);border-radius:4px;padding:32px 20px;text-align:center;}
+.cert-eyebrow{color:var(--gold);font-size:11px;letter-spacing:.25em;margin-bottom:10px;}
+.cert-title{font-family:'Fraunces',Georgia,serif;font-size:30px;font-weight:700;color:#fff;margin:0 0 4px;}
+.cert-sub{color:var(--gold);font-size:12px;letter-spacing:.15em;margin-bottom:26px;}
+.cert-body{color:#e6e1f7;font-size:14px;line-height:1.7;margin-bottom:22px;}
+.cert-name{font-family:'Fraunces',Georgia,serif;font-size:24px;color:var(--gold);margin:10px 0;}
+.cert-score{font-family:'Fraunces',Georgia,serif;font-size:44px;color:#fff;margin:14px 0 4px;}
+.cert-date{color:#9d94c4;font-size:12px;margin-top:18px;}
+.cert-seal{width:44px;height:44px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:18px auto 0;color:var(--gold);font-size:18px;}
 </style>
 </head>
-
 <body>
+<div class="app">
+  <div class="brand">IQ TEST</div>
 
-<div class="container">
+  <div id="s-intro" class="screen active">
+    <h1 id="introTitle">Bilim darajangizni tekshiring</h1>
+    <p class="lead" id="introLead">15 ta savol — mantiq, sonlar va so'z boyligi. Test oxirida darajangiz bepul, aniq ball esa to'lovdan keyin ochiladi.</p>
+    <div id="greetBox"></div>
+    <div class="card">
+      <input class="field" id="fname" placeholder="Ismingiz">
+      <input class="field" id="lname" placeholder="Familiyangiz">
+    </div>
+    <div class="spacer"></div>
+    <button class="btn" id="startBtn" onclick="startQuiz()">Testni boshlash</button>
+    <p class="note">Ko'ngilochar maqsaddagi test, klinik tashxis emas.</p>
+  </div>
 
-<!-- HOME -->
-<div id="home" class="card">
-  <span class="badge">IQ STYLE • 15 SAVOL</span>
-  <h1>IQ Test</h1>
-  <p>
-    Mantiq, diqqat va fikrlash tezligingizni sinab ko‘ring.
-    Har bir test 15 ta savoldan iborat.
-  </p>
-  <p><b>Eng yuqori natija: 180 ball</b></p>
-  <button class="btn" onclick="show('register')">Testni boshlash →</button>
-</div>
+  <div id="s-quiz" class="screen">
+    <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
+    <div class="qnum" id="qnum">Savol 1 / 15</div>
+    <div class="qtext" id="qtext"></div>
+    <div id="options"></div>
+  </div>
 
-<!-- REGISTER -->
-<div id="register" class="card hidden">
-  <span class="badge">1-QADAM</span>
-  <h2>Ma’lumotlaringiz</h2>
-  <p>Natijangizni saqlash uchun ism va familiyangizni kiriting.</p>
+  <div id="s-free" class="screen">
+    <h1>Test tugadi</h1>
+    <p class="lead">Sizning umumiy darajangiz:</p>
+    <div class="card center">
+      <div class="tier" id="tierLabel">—</div>
+      <div class="blur-score">92</div>
+      <p class="note" style="margin-top:14px;">Aniq ball va mavzular bo'yicha tahlilni ko'rish uchun to'lov qiling.</p>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn" onclick="showPayment()">To'liq natijani ochish — <span id="feeLabel1">10 000</span> so'm</button>
+  </div>
 
-  <input id="name" placeholder="Ismingiz">
-  <input id="surname" placeholder="Familiyangiz">
+  <div id="s-pay" class="screen">
+    <h1>To'lov</h1>
+    <p class="lead">Quyidagi kartaga <b>aniq <span id="feeLabel2">10 000</span> so'm</b> o'tkazing (ko'p yoki kam emas), so'ng pastdagi tugmani bosing.</p>
+    <div class="card center">
+      <div class="card-number" id="cardNum">5614 6818 5412 0718</div>
+      <div class="note" style="margin-top:6px;">Olimboyev Muxriddin</div>
+      <button class="btn secondary" style="margin-top:16px;" onclick="copyCard()">Raqamni nusxalash</button>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn" onclick="pay()">To'lov qildim</button>
+    <button class="btn secondary" style="margin-top:10px;" onclick="showScreen(pendingAction==='retry'?'s-full':'s-free')">Orqaga</button>
+  </div>
 
-  <button class="btn" onclick="startTest()">Testni boshlash</button>
-</div>
+  <div id="s-code" class="screen">
+    <h1>Tasdiqlashni kuting</h1>
+    <p class="lead">Administrator to'lovni tekshiradi va sizga tasdiqlash kodini yuboradi. Kodni shu yerga kiriting:</p>
+    <div class="card">
+      <input class="field" id="codeInput" placeholder="Tasdiqlash kodi" inputmode="numeric">
+    </div>
+    <div class="spacer"></div>
+    <button class="btn" onclick="checkCode()">Tasdiqlash</button>
+    <a class="btn secondary" id="contactLink" href="#" target="_blank" style="margin-top:10px;display:block;text-align:center;text-decoration:none;box-sizing:border-box;">Botga yozish</a>
+    <p class="note" id="codeErr"></p>
+  </div>
 
-<!-- TEST -->
-<div id="test" class="card hidden">
-  <span class="badge" id="counter">1 / 15</span>
-  <h2 id="question"></h2>
-  <div id="options"></div>
-</div>
+  <div id="s-full" class="screen">
+    <h1>Natijangiz tayyor</h1>
+    <div class="card center">
+      <div class="rank-badge"><span class="badge-num" id="tierShort">—</span></div>
+      <div class="tier" id="tierLabel2">—</div>
+      <div class="score-num" id="fullScore">—</div>
+      <p class="note">Taxminiy IQ ko'rsatkichi</p>
+    </div>
+    <div class="card">
+      <div class="breakdown-row"><span>Mantiqiy fikrlash</span><span id="b-logic">—</span></div>
+      <div class="breakdown-row"><span>Sonlar bilan ishlash</span><span id="b-math">—</span></div>
+      <div class="breakdown-row"><span>So'z boyligi</span><span id="b-verbal">—</span></div>
+      <div class="breakdown-row"><span>Naqsh va diqqat</span><span id="b-pattern">—</span></div>
+    </div>
+    <div class="card" id="histCard" style="display:none;">
+      <p class="note" style="margin:0 0 8px;text-align:left;">Sizning shaxsiy tarixingiz (shu qurilmada)</p>
+      <div id="histList"></div>
+    </div>
+    <div id="certCta"></div>
+    <div class="spacer"></div>
+    <button class="btn secondary" onclick="restart()">Boshqa savollar bilan qayta topshirish</button>
+  </div>
 
-<!-- RESULT -->
-<div id="result" class="card hidden center">
-  <span class="badge">NATIJA</span>
-  <h2 id="resultName"></h2>
-  <p>Sizning natijangiz:</p>
-
-  <div class="score" id="score">0</div>
-
-  <p id="message"></p>
-
-  <button class="btn" onclick="showRanking()">Reytingni ko‘rish</button>
-</div>
-
-<!-- RANKING -->
-<div id="ranking" class="card hidden">
-  <span class="badge">REYTING</span>
-  <h2>Natijalar jadvali</h2>
-
-  <div id="rankingList"></div>
-
-  <button class="btn" onclick="show('home')">Bosh sahifa</button>
-</div>
-
+  <div id="s-cert" class="screen">
+    <h1>Tabriklaymiz!</h1>
+    <div class="cert" id="certCard">
+      <div class="cert-inner">
+        <div class="cert-eyebrow">IQ TEST</div>
+        <div class="cert-title">SERTIFIKAT</div>
+        <div class="cert-sub">YUTUQ TASDIQNOMASI</div>
+        <div class="cert-body">Assalomu alaykum! Siz eng zo'r IQ testida eng yuqori ball oldingiz.<br>Siz zo'rsiz!</div>
+        <div class="cert-name" id="certName">—</div>
+        <div class="cert-score" id="certScore">—</div>
+        <div class="cert-date" id="certDate">—</div>
+        <div class="cert-seal">✦</div>
+      </div>
+    </div>
+    <button class="btn" onclick="downloadCert()">Sertifikatni yuklab olish</button>
+    <p class="note" id="certDlNote"></p>
+    <button class="btn secondary" style="margin-top:10px;" onclick="showScreen('s-full')">Natijaga qaytish</button>
+  </div>
 </div>
 
 <script>
-
-const questions = [
-
-{
-q:"2, 6, 12, 20, 30, ?",
-o:["36","40","42","44"],
-a:2
-},
-
-{
-q:"Agar barcha ZOR lar LAM bo‘lsa va ba’zi LAM lar KET bo‘lsa, qaysi xulosa aniq?",
-o:[
-"Barcha ZOR lar KET",
-"Hech bir ZOR KET emas",
-"Ba’zi ZOR lar KET bo‘lishi mumkin",
-"Barcha KET lar ZOR"
-],
-a:2
-},
-
-{
-q:"3 ta mashina 3 daqiqada 3 ta detal ishlab chiqarsa, 100 ta mashina 100 ta detalni qancha vaqtda ishlab chiqaradi?",
-o:["3 daqiqa","33 daqiqa","100 daqiqa","300 daqiqa"],
-a:0
-},
-
-{
-q:"Qaysi son boshqalardan farq qiladi?",
-o:["16","25","36","48"],
-a:3
-},
-
-{
-q:"Agar KECHA — 2 kun oldin bo‘lsa, BUGUNdan 3 kun keyin qaysi kun bo‘ladi?",
-o:["Ertaga","Indinga","3 kundan keyin","4 kundan keyin"],
-a:2
-},
-
-{
-q:"5 ishchi 5 kunda 5 ta xona bo‘yasa, 1 ishchi 1 xonani necha kunda bo‘yaydi?",
-o:["1","5","10","25"],
-a:1
-},
-
-{
-q:"1, 1, 2, 3, 5, 8, ?",
-o:["11","12","13","15"],
-a:2
-},
-
-{
-q:"Qaysi biri mantiqan boshqalardan farq qiladi?",
-o:["Olma","Nok","Sabzi","Shaftoli"],
-a:2
-},
-
-{
-q:"Agar 4 + 5 = 41 va 6 + 3 = 45 bo‘lsa, 7 + 2 = ?",
-o:["49","51","53","63"],
-a:0
-},
-
-{
-q:"Bir soat 60 daqiqadan iborat. 2,5 soat nechta daqiqa?",
-o:["120","135","150","180"],
-a:2
-},
-
-{
-q:"12, 24, 48, 96, ?",
-o:["144","168","192","200"],
-a:2
-},
-
-{
-q:"Agar barcha qushlar hayvon bo‘lsa, lekin barcha hayvonlar qush bo‘lmasa, qaysi gap to‘g‘ri?",
-o:[
-"Barcha hayvonlar qush",
-"Barcha qushlar hayvon",
-"Hech bir qush hayvon emas",
-"Qushlar hayvon bo‘la olmaydi"
-],
-a:1
-},
-
-{
-q:"8, 13, 21, 34, ?",
-o:["47","52","55","57"],
-a:2
-},
-
-{
-q:"Bir oilada 2 ota va 2 o‘g‘il bor, lekin jami 3 kishi. Qanday?",
-o:[
-"Bu mumkin emas",
-"Bobo, ota va o‘g‘il",
-"Ikki aka-uka",
-"Uchta aka"
-],
-a:1
-},
-
-{
-q:"100 dan 7 ni ketma-ket ayirsangiz: 100, 93, 86, 79, ?",
-o:["74","73","72","71"],
-a:1
-}
-
+const EASY=[
+{c:'math',q:"Bir sotuvchi 3 soatda 45 ta mahsulot sotadi. Xuddi shu tezlikda 5 soatda nechta sotadi?",o:["60","65","70","75"],a:3},
+{c:'logic',q:"Ketma-ketlik: 5, 10, 15, 20, ?",o:["22","24","25","30"],a:2},
+{c:'verbal',q:"Qalam — Yozish, Pichoq — ?",o:["Kesish","O'ynash","Chizish","Yig'ish"],a:0},
+{c:'pattern',q:"Ortiqchasini toping: Mushuk, It, Baliq, Stul",o:["Mushuk","It","Baliq","Stul"],a:3},
+{c:'logic',q:"Ketma-ketlik: 1, 4, 9, 16, ?",o:["20","24","25","36"],a:2},
+{c:'logic',q:"Barcha mushuklar sut ichadi. Marsel — mushuk. Marsel nima ichadi?",o:["Sut","Suv","Choy","Sharbat"],a:0},
+{c:'pattern',q:"Naqshni davom ettiring: ⚪⚫⚪⚫⚪ ?",o:["⚪","⚫","🔺","⬛"],a:1},
+{c:'verbal',q:"Bahor — Gullash, Kuz — ?",o:["Barg to'kish","Sovuq","Qor","Hosil"],a:0},
+{c:'pattern',q:"Ortiqchasini toping: Doira, Kvadrat, Uchburchak, Qizil",o:["Doira","Kvadrat","Uchburchak","Qizil"],a:3},
+{c:'logic',q:"Barcha qushlar uchadi. Tovus — qush. Tovus nima qiladi?",o:["Uchadi","Suzadi","Yuguradi","Sakraydi"],a:0},
+{c:'pattern',q:"Ketma-ketlik: A, C, E, G, ?",o:["H","I","J","K"],a:1},
+{c:'verbal',q:"Muzlatgich — Sovutish, Pech — ?",o:["Isitish","Yorug'lik","Tozalash","Tikish"],a:0}
+];
+const MEDIUM=[
+{c:'math',q:"12 ishchi bir ishni 8 kunda tugatadi. 6 ishchi shu ishni necha kunda tugatadi?",o:["10","12","14","16"],a:3},
+{c:'logic',q:"Ketma-ketlik: 2, 6, 12, 20, 30, ?",o:["36","40","42","45"],a:2},
+{c:'verbal',q:"Shifokor — Kasalxona, O'qituvchi — ?",o:["Maktab","Kitob","Doska","Partiya"],a:0},
+{c:'logic',q:"Aziz Botirdan baland. Sardor Azizdan past. Kim eng baland?",o:["Aziz","Botir","Sardor","Aniqlab bo'lmaydi"],a:0},
+{c:'logic',q:"Ketma-ketlik: 3, 9, 27, 81, ?",o:["162","243","216","270"],a:1},
+{c:'math',q:"Bir kitob ikkinchisidan 2 barobar qimmat. Ikkalasi birga 45 000 so'm. Arzon kitob narxi?",o:["10 000","12 000","15 000","20 000"],a:2},
+{c:'pattern',q:"Ketma-ketlik: 2, 3, 5, 8, 13, ?",o:["18","20","21","24"],a:2},
+{c:'math',q:"Ikki son yig'indisi 50, ayirmasi 10. Kattasi nechta?",o:["20","25","30","35"],a:2},
+{c:'logic',q:"Ketma-ketlik: 100, 95, 85, 70, ?",o:["45","50","55","60"],a:1},
+{c:'verbal',q:"Baliq — Suv, Qush — ?",o:["Osmon","Uya","Daraxt","Qanot"],a:0},
+{c:'logic',q:"Behruz Jasurdan katta. Jasur Aliyordan katta. Kim eng kichik?",o:["Behruz","Jasur","Aliyor","Aniqlab bo'lmaydi"],a:2},
+{c:'verbal',q:"Rassom — Bo'yoq, Yozuvchi — ?",o:["Qalam","Kitob","Sahifa","So'z"],a:0},
+{c:'pattern',q:"Ketma-ketlik: Z, X, V, T, ?",o:["Q","R","S","P"],a:1},
+{c:'logic',q:"Bugun seshanba bo'lsa, 10 kundan keyin qaysi kun bo'ladi?",o:["Payshanba","Juma","Shanba","Yakshanba"],a:1},
+{c:'verbal',q:"Kalit — Qulf, Parol — ?",o:["Hisob","Eshik","Kompyuter","Xat"],a:0},
+{c:'pattern',q:"Ortiqchasini toping: Dengiz, Ko'l, Daryo, Tog'",o:["Dengiz","Ko'l","Daryo","Tog'"],a:3}
+];
+const HARD=[
+{c:'logic',q:"Dilnoza Gulidan oldin keldi. Guli Alidan oldin keldi. Ali Validan oldin keldi. Kim birinchi?",o:["Ali","Vali","Guli","Dilnoza"],a:3},
+{c:'math',q:"A ishni yolg'iz 6 soatda, B esa 3 soatda bajaradi. Ikkalasi birga necha soatda tugatadi?",o:["1.5","2","2.5","3"],a:1},
+{c:'logic',q:"Ketma-ketlik: 4, 9, 20, 43, ?",o:["86","88","90","94"],a:2},
+{c:'verbal',q:"Muallif — Kitob, Me'mor — ?",o:["Bino","Reja","G'isht","Shahar"],a:0},
+{c:'logic',q:"5 mashina 5 mahsulotni 5 daqiqada ishlab chiqarsa, 100 mashina 100 mahsulotni necha daqiqada chiqaradi?",o:["5","20","100","500"],a:0},
+{c:'logic',q:"Ketma-ketlik: 1, 2, 6, 24, 120, ?",o:["240","360","600","720"],a:3},
+{c:'math',q:"Mahsulot narxi avval 20% oshirildi, keyin 20% pasaytirildi. Yakuniy narx boshlang'ichdan qanday farq qiladi?",o:["O'zgarmagan","4% kamaygan","4% oshgan","20% kamaygan"],a:1},
+{c:'logic',q:"Ba'zi mutafakkirlar shoirdir. Barcha shoirlar xayolparast. Demak — ?",o:["Barcha mutafakkirlar xayolparast","Ba'zi mutafakkirlar xayolparast bo'lishi mumkin","Hech bir mutafakkir xayolparast emas","Barcha xayolparastlar mutafakkir"],a:1},
+{c:'logic',q:"Ketma-ketlik: 1, 2, 4, 7, 13, 24, ?",o:["40","42","44","46"],a:2},
+{c:'math',q:"3 traktor 3 gektarni 3 kunda shudgorlaydi. 6 traktor 6 gektarni necha kunda shudgorlaydi?",o:["1","2","3","6"],a:2},
+{c:'math',q:"80 litr aralashmada 25% spirt bor. Necha litr suv qo'shsak, spirt ulushi 20% ga tushadi?",o:["10","15","20","25"],a:2},
+{c:'logic',q:"To'rtovdan faqat bittasi yolg'on: Aziz 'Bek yolg'on', Bek 'Vali yolg'on', Vali 'Gulnora rost', Gulnora 'Men rostman'. Kim yolg'onchi?",o:["Aziz","Bek","Vali","Gulnora"],a:1},
+{c:'math',q:"Soat milllari 12:00 da ustma-ust tushdi. Keyingi marta taxminan soat nechada ustma-ust tushadi?",o:["1:00","1:05","1:10","1:15"],a:1},
+{c:'math',q:"5 xil rangli bayroqdan 2 tasini tanlab, ketma-ket ikki xonaga osish mumkin bo'lgan usullar soni?",o:["10","15","20","25"],a:2},
+{c:'verbal',q:"Galaktika — Yulduzlar to'plami, Orkestr — ?",o:["Cholg'ular to'plami","Kontsert zali","Dirijyor","Nota"],a:0},
+{c:'logic',q:"Sonni 2 ga bo'lsak qoldiq 1, 3 ga bo'lsak qoldiq 2, 4 ga bo'lsak qoldiq 3. 20 dan kichik shu sonni toping.",o:["7","11","13","17"],a:1},
+{c:'verbal',q:"Hakim — Adolat, Shifokor — ?",o:["Sog'liq","Dori","Kasalxona","Jarrohlik"],a:0},
+{c:'logic',q:"Anvar Kamoladan ko'p ball oldi. Kamola Diyoradan kam ball oldi. Diyora Anvardan ko'p ball oldi. Kim eng ko'p ball oldi?",o:["Anvar","Kamola","Diyora","Aniqlab bo'lmaydi"],a:2},
+{c:'pattern',q:"Ketma-ketlik: 2, 5, 11, 23, 47, ?",o:["90","93","95","97"],a:2},
+{c:'verbal',q:"Simfoniya — Bastakor, Haykal — ?",o:["Haykaltarosh","Muzey","Marmar","Rasm"],a:0},
+{c:'logic',q:"Qutida 3 ta qizil, 2 ta ko'k sharcha bor. Ko'zni yumib bittasini olsak, qizil chiqish ehtimoli necha foiz?",o:["40%","50%","60%","70%"],a:2},
+{c:'pattern',q:"Ketma-ketlik: 5, 8, 13, 20, 29, ?",o:["38","39","40","41"],a:2},
+{c:'verbal',q:"Teleskop — Yulduzlar, Mikroskop — ?",o:["Hujayralar","Ko'zoynak","Linza","Shisha"],a:0},
+{c:'logic',q:"Uch do'st qatorda: Aziz Vosidan chapda, Vosi Karimdan chapda. Kim o'ng chetda?",o:["Aziz","Vosi","Karim","Aniqlab bo'lmaydi"],a:2}
 ];
 
-let current=0;
-let score=0;
-let userName="";
-let answers=[];
+let currentSet=[], current=0, answers=[], profile=null;
 
-function show(id){
-  ["home","register","test","result","ranking"].forEach(x=>{
-    document.getElementById(x).classList.add("hidden");
-  });
-  document.getElementById(id).classList.remove("hidden");
+function loadProfile(){
+  try{ const raw=localStorage.getItem('iqapp_profile'); return raw?JSON.parse(raw):null; }catch(e){ return null; }
 }
+function saveProfile(p){ try{ localStorage.setItem('iqapp_profile', JSON.stringify(p)); }catch(e){} }
 
-function startTest(){
-
-  const n=document.getElementById("name").value.trim();
-  const s=document.getElementById("surname").value.trim();
-
-  if(!n || !s){
-    alert("Iltimos, ism va familiyangizni kiriting.");
-    return;
-  }
-
-  userName=n+" "+s;
-  current=0;
-  score=0;
-  answers=[];
-
-  show("test");
-  loadQuestion();
-}
-
-function loadQuestion(){
-
-  const q=questions[current];
-
-  document.getElementById("counter").textContent=
-    (current+1)+" / "+questions.length;
-
-  document.getElementById("question").textContent=q.q;
-
-  const box=document.getElementById("options");
-  box.innerHTML="";
-
-  q.o.forEach((option,i)=>{
-
-    const div=document.createElement("div");
-    div.className="option";
-    div.textContent=option;
-
-    div.onclick=()=>{
-      answer(i);
-    };
-
-    box.appendChild(div);
-  });
-}
-
-function answer(selected){
-
-  if(selected===questions[current].a){
-    score+=12;
-  }
-
-  current++;
-
-  if(current<questions.length){
-    loadQuestion();
-  }else{
-    finish();
+function initIntro(){
+  profile = loadProfile();
+  if(profile && profile.firstName){
+    document.getElementById('fname').value = profile.firstName;
+    document.getElementById('lname').value = profile.lastName||'';
+    document.getElementById('greetBox').innerHTML =
+      `<div class="greet">Xush kelibsiz qaytganingizdan xursandmiz, <b>${escapeHtml(profile.firstName)}</b>! Oldingi natijangiz: <b>${escapeHtml(profile.bestTier||'—')}</b> (${profile.bestIQ||'—'}). Endi qiyinroq savollar bilan sinab ko'ring.`;
+    document.getElementById('startBtn').textContent = "Qayta urinib ko'rish";
   }
 }
 
-function finish(){
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+  return arr;
+}
+function sample(pool,n){ return shuffle(pool.slice()).slice(0,n); }
 
-  localStorage.setItem("iqUser",userName);
-  localStorage.setItem("iqScore",score);
+function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function choice(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function makeOptions(correct, spread){
+  const set=new Set([correct]); let guard=0;
+  while(set.size<4 && guard<50){ guard++; const delta=randInt(-spread,spread)||1; const val=correct+delta; if(val>0) set.add(val); }
+  const arr=shuffle([...set]);
+  return {o:arr.map(String), a:arr.indexOf(correct)};
+}
+function genArithSeq(level){
+  const start=randInt(2+level*5,15+level*15), diff=randInt(2+level*2,6+level*5);
+  const terms=[start,start+diff,start+2*diff,start+3*diff]; const ans=start+4*diff;
+  const r=makeOptions(ans,Math.max(2,diff));
+  return {c:'math',q:`Ketma-ketlikni davom ettiring: ${terms.join(', ')}, ?`,o:r.o,a:r.a};
+}
+function genGeoSeq(level){
+  const ratio=level>=3?choice([2,3]):2, start=randInt(1,3+level);
+  const terms=[start,start*ratio,start*ratio**2,start*ratio**3]; const ans=start*ratio**4;
+  const r=makeOptions(ans,Math.max(3,Math.round(ans*0.12)));
+  return {c:'math',q:`Ketma-ketlikni davom ettiring: ${terms.join(', ')}, ?`,o:r.o,a:r.a};
+}
+function genSumDiff(level){
+  const big=randInt(15+level*10,40+level*25), small=randInt(3+level*2,big-3-level*2);
+  const r=makeOptions(big,5);
+  return {c:'math',q:`Ikki son yig'indisi ${big+small}, ayirmasi ${big-small}. Kattasi nechta?`,o:r.o,a:r.a};
+}
+function genUnitRate(level){
+  const per=randInt(3+level*2,8+level*6), t1=randInt(2,4), t2=t1+randInt(1,3+level);
+  const r=makeOptions(per*t2,per);
+  return {c:'math',q:`Bir sex ${t1} soatda ${per*t1} ta mahsulot ishlab chiqaradi. Xuddi shu tezlikda ${t2} soatda nechta mahsulot chiqadi?`,o:r.o,a:r.a};
+}
+function genInverseWork(level){
+  const w1=randInt(2+level,4+level*2), d1=randInt(2+level,5+level*2), total=w1*d1;
+  const divisors=[]; for(let d=2;d<=total;d++){ if(total%d===0) divisors.push(d); }
+  const w2=choice(divisors.filter(d=>d!==w1))||divisors[0]||w1*2;
+  const r=makeOptions(total/w2,2);
+  return {c:'math',q:`${w1} ishchi bir ishni ${d1} kunda tugatadi. ${w2} ishchi shu ishni necha kunda tugatadi?`,o:r.o,a:r.a};
+}
+const ALLGENS=[genArithSeq,genGeoSeq,genSumDiff,genUnitRate,genInverseWork];
+function genForTier(tier){ const level=tier==='easy'?1:(tier==='medium'?2:3); return choice(ALLGENS)(level); }
 
-  document.getElementById("resultName").textContent=userName;
-  document.getElementById("score").textContent=score;
+function buildSet(attempts){
+  const mix = attempts<=0 ? [3,6,6] : [1,4,10];
+  const procEasy=Math.min(mix[0],1), procMed=Math.min(mix[1],2), procHard=Math.min(mix[2],2);
+  const pooled=[...sample(EASY,mix[0]-procEasy), ...sample(MEDIUM,mix[1]-procMed), ...sample(HARD,mix[2]-procHard)];
+  const generated=[
+    ...Array.from({length:procEasy},()=>genForTier('easy')),
+    ...Array.from({length:procMed},()=>genForTier('medium')),
+    ...Array.from({length:procHard},()=>genForTier('hard')),
+  ];
+  return shuffle([...pooled, ...generated]);
+}
 
-  let msg="";
+function startQuiz(){
+  const fn=document.getElementById('fname').value.trim();
+  const ln=document.getElementById('lname').value.trim();
+  if(!fn){ document.getElementById('fname').focus(); return; }
+  profile = profile || {attempts:0, history:[]};
+  profile.firstName=fn; profile.lastName=ln;
+  saveProfile(profile);
+  currentSet = buildSet(profile.attempts||0);
+  current=0; answers=[];
+  showScreen('s-quiz');
+  renderQuestion();
+}
 
-  if(score>=120){
-    msg="Tabriklaymiz! Siz yuqori natija ko‘rsatdingiz. Sertifikat olish imkoniyati mavjud.";
-  }else if(score>=100){
-    msg="Yaxshi natija! Yana urinib ko‘rib, natijangizni yaxshilashingiz mumkin.";
-  }else{
-    msg="Natijangizni yaxshilash uchun yana mashq qilib ko‘rishingiz mumkin.";
+function renderQuestion(){
+  const q = currentSet[current];
+  document.getElementById('qnum').textContent = `Savol ${current+1} / ${currentSet.length}`;
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('progress').style.width = `${(current/currentSet.length)*100}%`;
+  const box = document.getElementById('options');
+  box.innerHTML='';
+  const letters=['A','B','C','D'];
+  q.o.forEach((opt,i)=>{
+    const el=document.createElement('button');
+    el.className='option';
+    el.innerHTML = `<span class="optletter">${letters[i]}</span><span>${escapeHtml(opt)}</span>`;
+    el.onclick=()=>choose(i,el);
+    box.appendChild(el);
+  });
+}
+
+function choose(i, el){
+  document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[current]=i;
+  setTimeout(()=>{
+    current++;
+    if(current<currentSet.length){ renderQuestion(); }
+    else{ document.getElementById('progress').style.width='100%'; finishQuiz(); }
+  },220);
+}
+
+function finishQuiz(){
+  const total=currentSet.length;
+  const correct=answers.filter((a,i)=>a===currentSet[i].a).length;
+  const pct=correct/total;
+  let tier='O\'rta daraja';
+  if(pct>=0.75) tier='Yuqori daraja'; else if(pct<0.4) tier='Rivojlanish bosqichida';
+  const iq=Math.max(40,Math.min(180, Math.round(40+(correct/total)*140)));
+
+  const cats={logic:[0,0],math:[0,0],verbal:[0,0],pattern:[0,0]};
+  currentSet.forEach((q,i)=>{ cats[q.c][1]++; if(answers[i]===q.a) cats[q.c][0]++; });
+  const pctOf=(c)=> c[1]?Math.round((c[0]/c[1])*100):0;
+  window.__result={tier,iq,correct,total,breakdown:{logic:pctOf(cats.logic),math:pctOf(cats.math),verbal:pctOf(cats.verbal),pattern:pctOf(cats.pattern)}};
+
+  profile.attempts=(profile.attempts||0)+1;
+  if(!profile.bestIQ || iq>profile.bestIQ){ profile.bestIQ=iq; profile.bestTier=tier; }
+  profile.history=profile.history||[];
+  profile.history.unshift({date:new Date().toLocaleDateString('uz-UZ'),correct,total,iq,tier});
+  profile.history=profile.history.slice(0,5);
+  saveProfile(profile);
+
+  document.getElementById('tierLabel').textContent=tier;
+  if(paidThisAttempt){ paidThisAttempt=false; unlockResult(); } else { showScreen('s-free'); }
+}
+
+function showPayment(){ pendingAction='unlock'; currentFee=10000; syncFeeLabels(); showScreen('s-pay'); }
+function showRetryPayment(fee){ pendingAction='retry'; currentFee=fee; syncFeeLabels(); showScreen('s-pay'); }
+function syncFeeLabels(){
+  const f=currentFee.toLocaleString('ru-RU');
+  document.getElementById('feeLabel1').textContent=(10000).toLocaleString('ru-RU');
+  document.getElementById('feeLabel2').textContent=f;
+}
+
+const ADMIN_TELEGRAM = "Iq_test_ball_bot";
+const CODES = ["2129","212905","21290505","2129052129","21292129"]; // 1,2,3,4,5-marta kirganda; 6-martada yana 2129dan boshlanadi
+function currentConfirmCode(){
+  const n = ((profile && profile.payments) || 0) + 1;
+  return CODES[(n-1)%CODES.length];
+}
+let pendingAction='unlock', currentFee=10000, paidThisAttempt=false;
+
+function copyCard(){
+  const num = document.getElementById('cardNum').textContent.replace(/\s/g,'');
+  if(navigator.clipboard){ navigator.clipboard.writeText(num).catch(()=>{}); }
+}
+
+function pay(){
+  showScreen('s-code');
+  const link = document.getElementById('contactLink');
+  const name = ((profile&&profile.firstName)||'')+' '+((profile&&profile.lastName)||'');
+  const msg = encodeURIComponent(`Salom, men ${name.trim()}. IQ test uchun ${currentFee.toLocaleString('ru-RU')} so'm to'ladim, tasdiqlab bera olasizmi?`);
+  link.href = `https://t.me/${ADMIN_TELEGRAM}?text=${msg}`;
+}
+
+function checkCode(){
+  const val = document.getElementById('codeInput').value.trim();
+  document.getElementById('codeErr').textContent='';
+  if(val === currentConfirmCode()){
+    profile.payments=((profile.payments)||0)+1; saveProfile(profile);
+    if(pendingAction==='retry'){ paidThisAttempt=true; currentSet=buildSet(profile.attempts||0); current=0; answers=[]; showScreen('s-quiz'); renderQuestion(); }
+    else { unlockResult(); }
+  } else {
+    document.getElementById('codeErr').textContent = "Kod noto'g'ri. Administrator yuborgan kodni kiriting.";
+  }
+}
+
+function unlockResult(){
+  const r=window.__result; if(!r) return;
+  document.getElementById('tierLabel2').textContent=r.tier;
+  document.getElementById('tierShort').textContent=r.iq;
+  document.getElementById('fullScore').textContent=r.iq;
+  document.getElementById('b-logic').textContent=r.breakdown.logic+'%';
+  document.getElementById('b-math').textContent=r.breakdown.math+'%';
+  document.getElementById('b-verbal').textContent=r.breakdown.verbal+'%';
+  document.getElementById('b-pattern').textContent=r.breakdown.pattern+'%';
+
+  if(profile && profile.history && profile.history.length>1){
+    const hc=document.getElementById('histCard'); hc.style.display='block';
+    document.getElementById('histList').innerHTML = profile.history.map(h=>
+      `<div class="hist-row"><span>${h.date}</span><span>${h.correct}/${h.total} · IQ ${h.iq}</span></div>`).join('');
   }
 
-  document.getElementById("message").textContent=msg;
-
-  saveRanking();
-
-  show("result");
+  const cta=document.getElementById('certCta');
+  if(r.iq>=120){
+    cta.innerHTML = `<button class="btn" onclick="openCert()">🏆 Sertifikatni ko'rish</button>`;
+  } else {
+    const fee = r.iq<50 ? 10000 : (r.iq<100 ? 8000 : 5000);
+    cta.innerHTML = `<div class="card center"><p class="note" style="margin:0 0 4px;">Sertifikat 120+ ball uchun beriladi. Uzr, hozircha yetmadi.</p></div>
+      <button class="btn" onclick="showRetryPayment(${fee})">Qayta urinish — ${fee.toLocaleString('ru-RU')} so'm</button>`;
+  }
+  showScreen('s-full');
 }
 
-function saveRanking(){
-
-  let ranking=
-    JSON.parse(localStorage.getItem("iqRanking") || "[]");
-
-  ranking.push({
-    name:userName,
-    score:score
-  });
-
-  ranking.sort((a,b)=>b.score-a.score);
-
-  localStorage.setItem("iqRanking",JSON.stringify(ranking));
+function openCert(){
+  const r=window.__result; if(!r) return;
+  document.getElementById('certName').textContent = `${profile.firstName} ${profile.lastName||''}`.trim();
+  document.getElementById('certScore').textContent = `IQ ${r.iq}`;
+  document.getElementById('certDate').textContent = new Date().toLocaleDateString('uz-UZ');
+  showScreen('s-cert');
 }
 
-function showRanking(){
-
-  const list=document.getElementById("rankingList");
-
-  let ranking=
-    JSON.parse(localStorage.getItem("iqRanking") || "[]");
-
-  list.innerHTML="";
-
-  ranking.forEach((r,i)=>{
-
-    const div=document.createElement("div");
-
-    div.style.padding="15px";
-    div.style.margin="8px 0";
-    div.style.borderRadius="12px";
-    div.style.background="#11162b";
-
-    div.innerHTML=
-      "<b>"+(i+1)+". "+r.name+"</b>"+
-      "<br><small>"+r.score+" ball</small>";
-
-    list.appendChild(div);
-  });
-
-  show("ranking");
+async function downloadCert(){
+  const note=document.getElementById('certDlNote'); note.textContent='Tayyorlanmoqda...';
+  try{
+    const canvas = await html2canvas(document.getElementById('certCard'),{backgroundColor:'#141127',scale:2});
+    const blob = await new Promise(res=>canvas.toBlob(res,'image/png'));
+    if(window.claude && window.claude.use){
+      const dl = await window.claude.use('downloads');
+      if(dl){ await dl.save({filename:'IQ-sertifikat.png', data:blob}); note.textContent='Saqlandi!'; return; }
+    }
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download='IQ-sertifikat.png';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    note.textContent='Saqlandi!';
+  }catch(e){ note.textContent='Yuklab bo\'lmadi — ekranni skrinshot qiling.'; }
 }
 
+function restart(){ initIntro(); showScreen('s-intro'); }
+
+function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+
+window.addEventListener('DOMContentLoaded', ()=>{ initIntro(); });
 </script>
-
 </body>
 </html>
