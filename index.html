@@ -4,7 +4,12 @@
 <meta name="google-site-verification" content="MX_TMWymnf1MssVNgtwSxIewxD19fLGFTveuNrXsZwk" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>IQ Test</title>
+<meta name="description" content="Onlayn IQ test: 15 ta mantiq, son va so'z boyligi savoli. Darajangizni bepul ko'ring, 120+ ball olsangiz sertifikat oling.">
+<meta property="og:title" content="IQ Test — bilim darajangizni tekshiring">
+<meta property="og:description" content="15 ta savol, aniq IQ ball va 120+ uchun sertifikat. Hoziroq sinab ko'ring!">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#14111f">
+<title>IQ Test — onlayn IQ testi va sertifikat</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -26,7 +31,17 @@
 :root[data-theme="dark"]{--bg:#14111f;--surface:#1e1a33;--surface2:#262040;--text:#f3f1fb;--muted:#9d94c4;--border:#332c56;}
 *{box-sizing:border-box;}
 html,body{height:100%;}
-body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;display:flex;justify-content:center;min-height:100%;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;display:flex;justify-content:center;min-height:100%;position:relative;overflow-x:hidden;}
+.blob{position:fixed;border-radius:50%;filter:blur(60px);opacity:.35;pointer-events:none;z-index:0;}
+.blob1{width:260px;height:260px;background:var(--accent);top:-60px;left:-60px;animation:float1 14s ease-in-out infinite;}
+.blob2{width:220px;height:220px;background:var(--accent2);bottom:-60px;right:-40px;animation:float2 17s ease-in-out infinite;}
+@keyframes float1{0%,100%{transform:translate(0,0);}50%{transform:translate(30px,40px);}}
+@keyframes float2{0%,100%{transform:translate(0,0);}50%{transform:translate(-25px,-35px);}}
+.app{position:relative;z-index:1;}
+.qtext.slide-in{animation:slideIn .38s ease both;}
+@keyframes slideIn{from{opacity:0;transform:translateX(18px);}to{opacity:1;transform:translateX(0);}}
+.confetti{position:fixed;top:-10px;width:8px;height:8px;border-radius:2px;z-index:5;pointer-events:none;animation:fall 2.4s linear forwards;}
+@keyframes fall{to{transform:translateY(110vh) rotate(480deg);opacity:.3;}}
 h1,h2,.score-num,.badge-num{font-family:'Fraunces',Georgia,serif;}
 .app{width:100%;max-width:460px;padding:28px 20px 40px;display:flex;flex-direction:column;min-height:100%;}
 .brand{font-size:13px;color:var(--muted);letter-spacing:.08em;margin-bottom:18px;}
@@ -80,9 +95,17 @@ p.lead{color:var(--muted);font-size:15px;line-height:1.55;margin:0 0 24px;}
 .cert-score{font-family:'Fraunces',Georgia,serif;font-size:44px;color:#fff;margin:14px 0 4px;}
 .cert-date{color:#9d94c4;font-size:12px;margin-top:18px;}
 .cert-seal{width:44px;height:44px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:18px auto 0;color:var(--gold);font-size:18px;}
+.screen.active .breakdown-row{animation:rise .5s ease both;}
+.screen.active .breakdown-row:nth-child(2){animation-delay:.08s;}
+.screen.active .breakdown-row:nth-child(3){animation-delay:.16s;}
+.screen.active .breakdown-row:nth-child(4){animation-delay:.24s;}
+.option{transition:border-color .15s,background .15s,transform .1s;}
+.option:active{transform:scale(.985);}
 </style>
 </head>
 <body>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
 <div class="app">
   <div class="brand">IQ TEST</div>
 
@@ -115,12 +138,13 @@ p.lead{color:var(--muted);font-size:15px;line-height:1.55;margin:0 0 24px;}
       <p class="note" style="margin-top:14px;">Aniq ball va mavzular bo'yicha tahlilni ko'rish uchun to'lov qiling.</p>
     </div>
     <div class="spacer"></div>
-    <button class="btn" onclick="showPayment()">To'liq natijani ochish — <span id="feeLabel1">10 000</span> so'm</button>
+    <button class="btn" onclick="showPayment()">To'liq natijani ochish — <span id="feeLabel1">8 000</span> so'm</button>
+    <p class="note">Har safar qayta topshirsangiz narx arzonlashadi — 1 000 so'mgacha.</p>
   </div>
 
   <div id="s-pay" class="screen">
     <h1>To'lov</h1>
-    <p class="lead">Quyidagi kartaga <b>aniq <span id="feeLabel2">10 000</span> so'm</b> o'tkazing (ko'p yoki kam emas), so'ng pastdagi tugmani bosing.</p>
+    <p class="lead">Quyidagi kartaga <b>aniq <span id="feeLabel2">8 000</span> so'm</b> o'tkazing (ko'p yoki kam emas), so'ng pastdagi tugmani bosing.</p>
     <div class="card center">
       <div class="card-number" id="cardNum">5614 6818 5412 0718</div>
       <div class="note" style="margin-top:6px;">Olimboyev Muxriddin</div>
@@ -156,6 +180,11 @@ p.lead{color:var(--muted);font-size:15px;line-height:1.55;margin:0 0 24px;}
       <div class="breakdown-row"><span>Sonlar bilan ishlash</span><span id="b-math">—</span></div>
       <div class="breakdown-row"><span>So'z boyligi</span><span id="b-verbal">—</span></div>
       <div class="breakdown-row"><span>Naqsh va diqqat</span><span id="b-pattern">—</span></div>
+    </div>
+    <div class="card" id="rankCard" style="display:none;">
+      <p class="note" style="margin:0 0 6px;text-align:left;">Umumiy reyting</p>
+      <div id="rankLine" style="font-size:16px;margin-bottom:10px;"></div>
+      <div id="rankList"></div>
     </div>
     <div class="card" id="histCard" style="display:none;">
       <p class="note" style="margin:0 0 8px;text-align:left;">Sizning shaxsiy tarixingiz (shu qurilmada)</p>
@@ -199,7 +228,13 @@ const EASY=[
 {c:'pattern',q:"Ortiqchasini toping: Doira, Kvadrat, Uchburchak, Qizil",o:["Doira","Kvadrat","Uchburchak","Qizil"],a:3},
 {c:'logic',q:"Barcha qushlar uchadi. Tovus — qush. Tovus nima qiladi?",o:["Uchadi","Suzadi","Yuguradi","Sakraydi"],a:0},
 {c:'pattern',q:"Ketma-ketlik: A, C, E, G, ?",o:["H","I","J","K"],a:1},
-{c:'verbal',q:"Muzlatgich — Sovutish, Pech — ?",o:["Isitish","Yorug'lik","Tozalash","Tikish"],a:0}
+{c:'verbal',q:"Muzlatgich — Sovutish, Pech — ?",o:["Isitish","Yorug'lik","Tozalash","Tikish"],a:0},
+{c:'verbal',q:"'Keng' so'ziga zid ma'noli so'zni toping.",o:["Uzun","Tor","Katta","Baland"],a:1},
+{c:'verbal',q:"Ko'z — Ko'rish, Quloq — ?",o:["Eshitish","Hidlash","Gapirish","Yurish"],a:0},
+{c:'math',q:"Sinfda 40 o'quvchi bor, ulardan 60% qiz bola. O'g'il bolalar nechta?",o:["12","14","16","24"],a:2},
+{c:'verbal',q:"Issiq — Sovuq, Yorug' — ?",o:["Qorong'u","Oq","Yoqimli","Katta"],a:0},
+{c:'logic',q:"Ketma-ketlik: 10, 20, 30, 40, ?",o:["45","50","55","60"],a:1},
+{c:'pattern',q:"Ortiqchasini toping: Qizil, Ko'k, Yashil, Stol",o:["Qizil","Ko'k","Yashil","Stol"],a:3}
 ];
 const MEDIUM=[
 {c:'math',q:"12 ishchi bir ishni 8 kunda tugatadi. 6 ishchi shu ishni necha kunda tugatadi?",o:["10","12","14","16"],a:3},
@@ -217,7 +252,25 @@ const MEDIUM=[
 {c:'pattern',q:"Ketma-ketlik: Z, X, V, T, ?",o:["Q","R","S","P"],a:1},
 {c:'logic',q:"Bugun seshanba bo'lsa, 10 kundan keyin qaysi kun bo'ladi?",o:["Payshanba","Juma","Shanba","Yakshanba"],a:1},
 {c:'verbal',q:"Kalit — Qulf, Parol — ?",o:["Hisob","Eshik","Kompyuter","Xat"],a:0},
-{c:'pattern',q:"Ortiqchasini toping: Dengiz, Ko'l, Daryo, Tog'",o:["Dengiz","Ko'l","Daryo","Tog'"],a:3}
+{c:'pattern',q:"Ortiqchasini toping: Dengiz, Ko'l, Daryo, Tog'",o:["Dengiz","Ko'l","Daryo","Tog'"],a:3},
+{c:'math',q:"Tovar 200 000 so'mga sotib olinib, 25% foyda bilan sotildi. Sotish narxi qancha?",o:["225 000","240 000","250 000","275 000"],a:2},
+{c:'math',q:"Ikki son nisbati 3:5, yig'indisi 64. Kattasi nechta?",o:["32","36","40","45"],a:2},
+{c:'math',q:"Hovuz birinchi quvur bilan 6 soatda, ikkinchisi bilan 12 soatda to'ladi. Ikkalasi birga ochilsa necha soatda to'ladi?",o:["3","4","5","9"],a:1},
+{c:'logic',q:"Ketma-ketlik: 2, 3, 5, 9, 17, ?",o:["31","33","35","37"],a:1},
+{c:'logic',q:"Kecha kundan oldingi kun yakshanba edi. Ertaga qaysi kun?",o:["Seshanba","Chorshanba","Payshanba","Dushanba"],a:1},
+{c:'verbal',q:"'Jasur' so'ziga ma'nodosh so'zni toping.",o:["Qo'rqoq","Botir","Dangasa","Ayyor"],a:1},
+{c:'pattern',q:"Tub son bo'lmaganini toping: 2, 3, 5, 9, 11",o:["3","5","9","11"],a:2},
+{c:'pattern',q:"To'liq kvadrat bo'lmagan sonni toping: 16, 25, 36, 48, 49",o:["16","36","48","49"],a:2},
+{c:'logic',q:"A, B, C harflaridan (takrorlanmasdan) nechta har xil 3 harfli birikma yasash mumkin?",o:["3","6","9","12"],a:1},
+{c:'math',q:"Mashina 90 km ni 1,5 soatda bosib o'tdi. Uning tezligi necha km/soat?",o:["50","55","60","65"],a:2},
+{c:'math',q:"Kitob 240 bet. Birinchi kuni 1/4 qismini, ikkinchi kuni qolganining 1/3 qismini o'qidi. Necha bet o'qilmay qoldi?",o:["100","110","120","130"],a:2},
+{c:'math',q:"3 ta sonning o'rtachasi 10. To'rtinchi son qo'shilsa o'rtacha 12 bo'ladi. To'rtinchi son nechta?",o:["16","18","20","22"],a:1},
+{c:'logic',q:"Ketma-ketlik: 1, 3, 7, 15, 31, ?",o:["47","55","63","65"],a:2},
+{c:'logic',q:"Ketma-ketlik: 2, 6, 7, 21, 22, 66, ?",o:["67","68","132","198"],a:0},
+{c:'pattern',q:"Ortiqchasini toping: Pianino, Gitara, Skripka, Rassom",o:["Pianino","Gitara","Skripka","Rassom"],a:3},
+{c:'logic',q:"Oilada 3 ta o'g'il bor va ularning har birining aynan 1 ta opa-singlisi bor. Oilada jami nechta farzand bor?",o:["4","5","6","7"],a:0},
+{c:'math',q:"Pitsa 8 bo'lakka bo'lindi. Aziz 3 bo'lak, Vali 2 bo'lak yedi. Pitsaning necha foizi qoldi?",o:["25%","37.5%","40%","62.5%"],a:1},
+{c:'math',q:"Yig'indisi 100 bo'lgan ikki sonning ko'paytmasi eng katta bo'lishi uchun ular qanday bo'lishi kerak?",o:["50 va 50","60 va 40","75 va 25","99 va 1"],a:0}
 ];
 const HARD=[
 {c:'logic',q:"Dilnoza Gulidan oldin keldi. Guli Alidan oldin keldi. Ali Validan oldin keldi. Kim birinchi?",o:["Ali","Vali","Guli","Dilnoza"],a:3},
@@ -243,7 +296,63 @@ const HARD=[
 {c:'logic',q:"Qutida 3 ta qizil, 2 ta ko'k sharcha bor. Ko'zni yumib bittasini olsak, qizil chiqish ehtimoli necha foiz?",o:["40%","50%","60%","70%"],a:2},
 {c:'pattern',q:"Ketma-ketlik: 5, 8, 13, 20, 29, ?",o:["38","39","40","41"],a:2},
 {c:'verbal',q:"Teleskop — Yulduzlar, Mikroskop — ?",o:["Hujayralar","Ko'zoynak","Linza","Shisha"],a:0},
-{c:'logic',q:"Uch do'st qatorda: Aziz Vosidan chapda, Vosi Karimdan chapda. Kim o'ng chetda?",o:["Aziz","Vosi","Karim","Aniqlab bo'lmaydi"],a:2}
+{c:'logic',q:"Uch do'st qatorda: Aziz Vosidan chapda, Vosi Karimdan chapda. Kim o'ng chetda?",o:["Aziz","Vosi","Karim","Aniqlab bo'lmaydi"],a:2},
+{c:'logic',q:"'KITOB' so'zi 'LJUPC' deb kodlansa (har harf alifboda 1 ta oldinga suriladi), 'QALAM' qanday kodlanadi?",o:["RBMBN","RBNBM","SBMBN","RCMBN"],a:0},
+{c:'logic',q:"Ali — Valining otasi. Vali — Gulining akasi. Ali Guliga kim bo'ladi?",o:["Akasi","Otasi","Amakisi","Bobosi"],a:1},
+{c:'logic',q:"A — B ning onasi. B — C ning otasi. A C ga kim bo'ladi?",o:["Onasi","Buvisi","Xolasi","Ammasi"],a:1},
+{c:'logic',q:"Men shimolga 4 km, keyin sharqqa 3 km yurdim. Boshlang'ich nuqtadan to'g'ri chiziq bo'yicha qancha uzoqlikdaman?",o:["5 km","6 km","7 km","4 km"],a:0},
+{c:'logic',q:"A=1, B=2, C=3... bo'lsa, 'CAB' so'zidagi harflar yig'indisi nechta?",o:["5","6","7","8"],a:1},
+{c:'pattern',q:"Ortiqchasini toping: Bahor, Yoz, Kuz, Dushanba",o:["Bahor","Yoz","Kuz","Dushanba"],a:3},
+{c:'logic',q:"100 kishidan 60 tasi futbolni, 50 tasi basketbolni, 20 tasi ikkalasini ham yoqtiradi. Hech birini yoqtirmaydiganlar nechta?",o:["0","10","20","30"],a:1},
+{c:'logic',q:"Yuzim shimolga qaragan holda o'ngga burildim. Endi qaysi tomonga qarayapman?",o:["Sharq","G'arb","Janub","Shimol"],a:0},
+{c:'logic',q:"Har bir harfni alifboda 2 ta oldinga surib kodlang: 'DARA' so'zi qanday kodlanadi?",o:["FCTC","FBTC","FCTB","ECTC"],a:0},
+{c:'logic',q:"Farida — Karimning singlisi. Karim — Azizning o'g'li. Farida Azizga kim bo'ladi?",o:["Qizi","Singlisi","Rafiqasi","Nabirasi"],a:0},
+{c:'math',q:"Otaning yoshi o'g'lining yoshidan 4 barobar katta. 5 yildan keyin ularning yoshlari yig'indisi 70 bo'ladi. O'g'il hozir necha yoshda?",o:["10","12","14","15"],a:1},
+{c:'math',q:"Poyezd 60 km/soat tezlikda 2 soat, so'ng 90 km/soat tezlikda 2 soat yurdi. O'rtacha tezligi qancha?",o:["70","72","75","80"],a:2},
+{c:'math',q:"Narx 50% ga oshirildi, keyin 50% ga tushirildi. Natija qanday?",o:["O'zgarmagan","25% kamaygan","25% oshgan","50% kamaygan"],a:1},
+{c:'logic',q:"Ketma-ketlik: 1, 4, 10, 22, 46, ?",o:["90","92","94","96"],a:2},
+{c:'logic',q:"Ketma-ketlik: 3, 10, 6, 20, 12, 40, ?",o:["18","24","30","80"],a:1},
+{c:'pattern',q:"Harflar: A, C, F, J, O, ?",o:["S","T","U","V"],a:2},
+{c:'logic',q:"Hamma gulchilar o'qituvchi. Hech bir o'qituvchi yomg'irni yoqtirmaydi. Demak — ?",o:["Hech bir gulchi yomg'irni yoqtirmaydi","Ba'zi gulchilar yomg'irni yoqtiradi","Hamma gulchilar yomg'irni yoqtiradi","Aniqlab bo'lmaydi"],a:0},
+{c:'logic',q:"Uch qutidagi yorliqlar (Olma, Nok, Aralash) hammasi noto'g'ri yopishtirilgan. 'Aralash' qutidan olma chiqdi. Bu qutida nima bor?",o:["Faqat olma","Faqat nok","Aralash","Aniqlab bo'lmaydi"],a:0},
+{c:'verbal',q:"Tabib — Davolash, Sudya — ?",o:["Hukm chiqarish","Himoya qilish","Qamash","Yozish"],a:0},
+{c:'pattern',q:"Naqshni davom ettiring: 🔴 | 🔴🔵 | 🔴🔵🔴 | 🔴🔵🔴🔵 | ?",o:["🔴🔵🔴🔵🔴","🔴🔵🔴🔵🔵","🔵🔴🔵🔴🔵","🔴🔴🔵🔵🔴"],a:0},
+{c:'math',q:"Hovlida tovuq va quyonlar bor: jami 20 bosh, 56 oyoq. Quyonlar nechta?",o:["6","8","10","12"],a:1},
+{c:'math',q:"Soat 3:15 da soat va minut millari orasidagi burchak necha gradus?",o:["0°","7.5°","15°","30°"],a:1},
+{c:'math',q:"Ikkita tanga tashlandi. Kamida bittasida 'gerb' tushish ehtimoli qancha?",o:["50%","66%","75%","100%"],a:2},
+{c:'logic',q:"Anvar: 'Men hozir yolg'on gapiryapman'. Bu gap haqida nima deyish mumkin?",o:["Rost","Yolg'on","Paradoks (ziddiyat)","Savol noto'g'ri"],a:2},
+{c:'logic',q:"Poygada 5 kishi: C A dan oldin, D C dan keyin lekin A dan oldin, A B dan oldin, E oxirgi. Ikkinchi kim keldi?",o:["A","B","C","D"],a:3},
+{c:'logic',q:"Ali, Bobur, Sardor — biri shifokor, biri o'qituvchi, biri muhandis. Ali shifokor emas. Bobur o'qituvchi ham, muhandis ham emas. Sardor muhandis emas. Ali kim?",o:["Shifokor","O'qituvchi","Muhandis","Aniqlab bo'lmaydi"],a:2},
+{c:'math',q:"Bir son 15% ga oshirilsa 230 bo'ladi. Dastlabki son nechta?",o:["195","200","205","210"],a:1},
+{c:'math',q:"Ikki poyezd bir-biriga qarab chiqdi: tezliklari 70 va 80 km/soat, orasidagi masofa 450 km. Necha soatdan keyin uchrashadi?",o:["2","3","4","5"],a:1},
+{c:'math',q:"Sinfda o'g'il bolalar qizlardan 4 ta ko'p, jami 30 o'quvchi. Qizlar nechta?",o:["11","12","13","14"],a:2},
+{c:'math',q:"Ketma-ket 3 ta butun son yig'indisi 72. Eng kattasi nechta?",o:["24","25","26","27"],a:1},
+{c:'logic',q:"Ketma-ketlik: 1, 8, 27, 64, ?",o:["100","115","125","216"],a:2},
+{c:'logic',q:"Ketma-ketlik: 5, 6, 8, 11, 15, 20, ?",o:["25","26","27","28"],a:1},
+{c:'pattern',q:"Harflar: B, E, H, K, N, ?",o:["O","P","Q","R"],a:2},
+{c:'pattern',q:"Juftliklar: AZ, BY, CX, DW, ?",o:["EV","EU","FV","EW"],a:0},
+{c:'verbal',q:"Dengiz — Baliq, Cho'l — ?",o:["Tuya","Yomg'ir","Daraxt","Muz"],a:0},
+{c:'verbal',q:"Shoir — She'r, Bastakor — ?",o:["Musiqa","Nota daftari","Pianino","Konsert"],a:0},
+{c:'verbal',q:"Chaqmoq — Momaqaldiroq, Olov — ?",o:["Tutun","Suv","Shamol","Qor"],a:0},
+{c:'verbal',q:"'Mahorat' so'ziga ma'nodosh so'zni toping.",o:["Ustalik","Dangasalik","Qo'rquv","Tasodif"],a:0},
+{c:'verbal',q:"'Kamtar' so'ziga zid ma'noli so'zni toping.",o:["Mag'rur","Sodda","Mehribon","Sokin"],a:0},
+{c:'pattern',q:"Ortiqchasini toping: Hamdard, Mehribon, Rahmdil, Shafqatsiz",o:["Hamdard","Mehribon","Rahmdil","Shafqatsiz"],a:3},
+{c:'logic',q:"Soat 6:00 da 6 marta zang uriladi va bu 30 soniya davom etadi. 12:00 da 12 marta zang urilsa necha soniya davom etadi?",o:["60","66","72","132"],a:1},
+{c:'logic',q:"Ariq bo'ylab 10 ta daraxt 5 metrdan oraliq bilan ekilgan. Birinchi va oxirgi daraxt orasi necha metr?",o:["45","50","55","40"],a:0},
+{c:'math',q:"Do'kon narxni 30% ga arzonlashtirdi, keyin yana 10% ga arzonlashtirdi. Umumiy chegirma necha foiz?",o:["40%","37%","33%","30%"],a:1},
+{c:'math',q:"Kub qirrasi 2 barobar oshirilsa, hajmi necha barobar oshadi?",o:["2","4","6","8"],a:3}
+];
+const EXPERT=[
+{c:'math',q:"x + 1/x = 3 bo'lsa, x² + 1/x² nechaga teng?",o:["5","7","9","11"],a:1},
+{c:'logic',q:"Ketma-ketlik: 2, 12, 36, 80, 150, ?",o:["216","240","252","264"],a:2},
+{c:'pattern',q:"Harflar: Z, W, S, N, H, ?",o:["A","B","C","D"],a:0},
+{c:'logic',q:"A: 'B yolg'on gapiryapti'. B: 'C yolg'on gapiryapti'. C: 'A va B ikkalasi ham yolg'on gapiryapti'. Kim rost gapiryapti?",o:["Faqat A","Faqat B","Faqat C","A va C"],a:1},
+{c:'logic',q:"Shaharda faqat rostgo'ylar (doim rost) va yolg'onchilar (doim yolg'on) yashaydi. Yo'lovchi biridan: 'Siz yolg'onchimisiz?' deb so'radi. U nima deb javob beradi?",o:["Ikkalasi ham 'Ha' deydi","Ikkalasi ham 'Yo'q' deydi","Rostgo'y 'Ha', yolg'onchi 'Yo'q'","Rostgo'y 'Yo'q', yolg'onchi 'Ha'"],a:1},
+{c:'math',q:"A va B birga ishni 6 kunda, A yolg'iz 10 kunda tugatadi. B yolg'iz necha kunda tugatadi?",o:["12","15","16","20"],a:1},
+{c:'math',q:"Ikki xonali sonning raqamlari yig'indisi 9. Raqamlari o'rni almashtirilsa son 27 ga kamayadi. Shu son nechta?",o:["54","63","72","81"],a:1},
+{c:'math',q:"100 dan kichik nechta tub son bor?",o:["20","23","25","27"],a:2},
+{c:'math',q:"Qutida 4 ta qizil va 6 ta ko'k shar bor. Ketma-ket (qaytarmasdan) 2 ta shar olinsa, ikkalasi ham qizil bo'lish ehtimoli qancha?",o:["2/15","1/5","4/25","1/3"],a:0},
+{c:'math',q:"2, 3, 4, 5 va 6 ning hammasiga bo'linadigan eng kichik natural son nechta?",o:["30","60","120","180"],a:1}
 ];
 
 let currentSet=[], current=0, answers=[], profile=null;
@@ -301,25 +410,52 @@ function genUnitRate(level){
   return {c:'math',q:`Bir sex ${t1} soatda ${per*t1} ta mahsulot ishlab chiqaradi. Xuddi shu tezlikda ${t2} soatda nechta mahsulot chiqadi?`,o:r.o,a:r.a};
 }
 function genInverseWork(level){
-  const w1=randInt(2+level,4+level*2), d1=randInt(2+level,5+level*2), total=w1*d1;
-  const divisors=[]; for(let d=2;d<=total;d++){ if(total%d===0) divisors.push(d); }
-  const w2=choice(divisors.filter(d=>d!==w1))||divisors[0]||w1*2;
-  const r=makeOptions(total/w2,2);
+  const k=choice([2,3]); let w1,d1,w2,ans;
+  if(Math.random()<0.5){ ans=randInt(2+level,4+level*2); d1=ans*k; w1=randInt(2+level,4+level*2); w2=w1*k; }
+  else { w2=randInt(2+level,4+level*2); w1=w2*k; d1=randInt(2+level,4+level*2); ans=d1*k; }
+  const r=makeOptions(ans,Math.max(2,Math.round(ans*0.25)));
   return {c:'math',q:`${w1} ishchi bir ishni ${d1} kunda tugatadi. ${w2} ishchi shu ishni necha kunda tugatadi?`,o:r.o,a:r.a};
 }
-const ALLGENS=[genArithSeq,genGeoSeq,genSumDiff,genUnitRate,genInverseWork];
-function genForTier(tier){ const level=tier==='easy'?1:(tier==='medium'?2:3); return choice(ALLGENS)(level); }
+function genConsecutive(level){
+  const cnt=choice([3,5]), mid=randInt(10+level*8,40+level*20), r=makeOptions(mid+(cnt-1)/2,3);
+  return {c:'math',q:`Ketma-ket ${cnt} ta butun son yig'indisi ${mid*cnt}. Eng kattasi nechta?`,o:r.o,a:r.a};
+}
+function genAverage(level){
+  const n=randInt(3,6), A=randInt(8+level*2,20+level*4), d=randInt(1,2+level), r=makeOptions(A+d*(n+1),Math.max(3,d));
+  return {c:'math',q:`${n} ta sonning o'rtachasi ${A}. Yana bitta son qo'shilsa, o'rtacha ${A+d} bo'ladi. Qo'shilgan son nechta?`,o:r.o,a:r.a};
+}
+function genMeet(level){
+  const v1=randInt(4+level*3,10+level*8), v2=randInt(4+level*3,10+level*8), t=randInt(2,4+level), r=makeOptions(t,2);
+  return {c:'math',q:`Ikki poyezd bir-biriga qarab bir vaqtda chiqdi: tezliklari ${v1} va ${v2} km/soat, orasidagi masofa ${(v1+v2)*t} km. Necha soatdan keyin uchrashadi?`,o:r.o,a:r.a};
+}
+function genPercentChain(level){
+  const base=choice([1,2,4,5,10])*100000, p=choice([10,20,25,50]), q=choice([10,20,25,50]);
+  const end=base*(100+p)*(100-q)/10000, naive=base*(100+p-q)/100;
+  const pool=[...new Set([naive,base,end+base/10,end-base/10,end+base/20])].filter(x=>x>0&&x!==end);
+  const arr=shuffle([end,...shuffle(pool).slice(0,3)]), f=x=>x.toLocaleString('ru-RU');
+  return {c:'math',q:`Tovar narxi ${f(base)} so'm edi. Avval ${p}% oshirildi, keyin ${q}% arzonlashtirildi. Yakuniy narx qancha?`,o:arr.map(f),a:arr.indexOf(end)};
+}
+const ALLGENS=[genArithSeq,genGeoSeq,genSumDiff,genUnitRate,genInverseWork,genConsecutive,genAverage,genMeet,genPercentChain];
+function genForTier(tier){ const level={easy:1,medium:2,hard:3,expert:4}[tier]||3; return choice(ALLGENS)(level); }
 
+function pickBalanced(pool,n,need){
+  const cand=shuffle(pool.slice()), out=[];
+  for(const q of cand){ if(out.length>=n) break; if(need[q.c]>0){ out.push(q); need[q.c]--; } }
+  for(const q of cand){ if(out.length>=n) break; if(!out.includes(q)){ out.push(q); if(need[q.c]>0) need[q.c]--; } }
+  return out;
+}
 function buildSet(attempts){
-  const mix = attempts<=0 ? [3,6,6] : [1,4,10];
-  const procEasy=Math.min(mix[0],1), procMed=Math.min(mix[1],2), procHard=Math.min(mix[2],2);
-  const pooled=[...sample(EASY,mix[0]-procEasy), ...sample(MEDIUM,mix[1]-procMed), ...sample(HARD,mix[2]-procHard)];
-  const generated=[
-    ...Array.from({length:procEasy},()=>genForTier('easy')),
-    ...Array.from({length:procMed},()=>genForTier('medium')),
-    ...Array.from({length:procHard},()=>genForTier('hard')),
-  ];
-  return shuffle([...pooled, ...generated]);
+  const first=attempts<=0;
+  const mix=first?[1,4,7,3]:[0,2,6,7], gen=first?[1,1,1,1]:[0,1,1,2];
+  const pools=[EASY,MEDIUM,HARD,EXPERT], tiers=['easy','medium','hard','expert'];
+  const need={logic:5,math:5,verbal:3,pattern:2};
+  need.math=Math.max(0,need.math-gen.reduce((a,b)=>a+b,0));
+  const pooled=[];
+  [0,1,2,3].sort((a,b)=>(mix[b]-gen[b])-(mix[a]-gen[a])).forEach(i=>pooled.push(...pickBalanced(pools[i],mix[i]-gen[i],need)));
+  const used=new Set(pooled.map(q=>q.q));
+  const gen1=(tier)=>{ for(let k=0;k<30;k++){ const q=genForTier(tier); if(!used.has(q.q)){ used.add(q.q); return q; } } return genForTier(tier); };
+  const generated=[]; tiers.forEach((t,i)=>{ for(let k=0;k<gen[i];k++) generated.push(gen1(t)); });
+  return shuffle([...pooled,...generated]);
 }
 
 function startQuiz(){
@@ -338,7 +474,9 @@ function startQuiz(){
 function renderQuestion(){
   const q = currentSet[current];
   document.getElementById('qnum').textContent = `Savol ${current+1} / ${currentSet.length}`;
-  document.getElementById('qtext').textContent = q.q;
+  const qt=document.getElementById('qtext');
+  qt.textContent = q.q;
+  qt.classList.remove('slide-in'); void qt.offsetWidth; qt.classList.add('slide-in');
   document.getElementById('progress').style.width = `${(current/currentSet.length)*100}%`;
   const box = document.getElementById('options');
   box.innerHTML='';
@@ -381,27 +519,47 @@ function finishQuiz(){
   profile.history=profile.history||[];
   profile.history.unshift({date:new Date().toLocaleDateString('uz-UZ'),correct,total,iq,tier});
   profile.history=profile.history.slice(0,5);
+  if(!profile.id){ profile.id=newId(); }
   saveProfile(profile);
+  window.__submitP=submitScore(iq);
 
   document.getElementById('tierLabel').textContent=tier;
-  if(paidThisAttempt){ paidThisAttempt=false; unlockResult(); } else { showScreen('s-free'); }
+  if(paidThisAttempt){ paidThisAttempt=false; unlockResult(); } else { syncFeeLabels(); showScreen('s-free'); }
 }
 
-function showPayment(){ pendingAction='unlock'; currentFee=10000; syncFeeLabels(); showScreen('s-pay'); }
-function showRetryPayment(fee){ pendingAction='retry'; currentFee=fee; syncFeeLabels(); showScreen('s-pay'); }
+function showPayment(){ pendingAction='unlock'; currentFee=priceFor(nextPayNo()); syncFeeLabels(); showScreen('s-pay'); }
+function showRetryPayment(){ pendingAction='retry'; currentFee=priceFor(nextPayNo()); syncFeeLabels(); showScreen('s-pay'); }
 function syncFeeLabels(){
-  const f=currentFee.toLocaleString('ru-RU');
-  document.getElementById('feeLabel1').textContent=(10000).toLocaleString('ru-RU');
-  document.getElementById('feeLabel2').textContent=f;
+  document.getElementById('feeLabel1').textContent=priceFor(nextPayNo()).toLocaleString('ru-RU');
+  document.getElementById('feeLabel2').textContent=currentFee.toLocaleString('ru-RU');
 }
 
 const ADMIN_TELEGRAM = "Iq_test_ball_bot";
-const CODES = ["2129","212905","21290505","2129052129","21292129"]; // 1,2,3,4,5-marta kirganda; 6-martada yana 2129dan boshlanadi
-function currentConfirmCode(){
-  const n = ((profile && profile.payments) || 0) + 1;
-  return CODES[(n-1)%CODES.length];
+const LAT={'А':'A','Б':'B','В':'V','Г':'G','Д':'D','Е':'E','Ё':'Y','Ж':'J','З':'Z','И':'I','Й':'Y','К':'K','Л':'L','М':'M','Н':'N','О':'O','П':'P','Р':'R','С':'S','Т':'T','У':'U','Ф':'F','Х':'X','Ц':'S','Ч':'C','Ш':'S','Э':'E','Ю':'Y','Я':'Y','Ў':'O','Қ':'Q','Ғ':'G','Ҳ':'H'};
+function normName(str){
+  return (str||'').toUpperCase().split('').map(ch=>LAT[ch]||ch).join('').replace(/[^A-Z]/g,'');
 }
-let pendingAction='unlock', currentFee=10000, paidThisAttempt=false;
+function hash32(str,seed){
+  let h=(0x811c9dc5^seed)>>>0;
+  for(let i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,0x01000193)>>>0; }
+  return h>>>0;
+}
+// Parol = to'liq ism + sana + to'lov raqami. Ism yo'q/belgi bo'lsa — murakkab (12 xonali)
+function makeCode(fullName,date,n){
+  const nm=normName(fullName), base='IQ2129|'+nm+'|'+date+'|'+n;
+  if(nm.length>=4) return String(hash32(base,7)%100000000).padStart(8,'0');
+  const b2=base+'|'+String(fullName||'').replace(/\s+/g,'');
+  return String(hash32(b2,11)%1000000).padStart(6,'0')+String(hash32(b2+'#',13)%1000000).padStart(6,'0');
+}
+function tashkentDate(off){
+  return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tashkent'}).format(new Date(Date.now()+(off||0)*86400000));
+}
+const PRICES=[8000,6000,5000,4000,3000,2500,2000,1000];
+function nextPayNo(){ return ((profile&&profile.payments)||0)+1; }
+function priceFor(n){ return PRICES[Math.min(n,PRICES.length)-1]; }
+function fullNameNow(){ return ((profile&&profile.firstName)||'')+' '+((profile&&profile.lastName)||''); }
+function validCodes(){ const n=nextPayNo(); return [0,-1].map(o=>makeCode(fullNameNow(),tashkentDate(o),n)); }
+let pendingAction='unlock', currentFee=5000, paidThisAttempt=false;
 
 function copyCard(){
   const num = document.getElementById('cardNum').textContent.replace(/\s/g,'');
@@ -410,16 +568,15 @@ function copyCard(){
 
 function pay(){
   showScreen('s-code');
-  const link = document.getElementById('contactLink');
-  const name = ((profile&&profile.firstName)||'')+' '+((profile&&profile.lastName)||'');
-  const msg = encodeURIComponent(`Salom, men ${name.trim()}. IQ test uchun ${currentFee.toLocaleString('ru-RU')} so'm to'ladim, tasdiqlab bera olasizmi?`);
-  link.href = `https://t.me/${ADMIN_TELEGRAM}?text=${msg}`;
+  const link=document.getElementById('contactLink');
+  const msg=encodeURIComponent(`Salom, men ${fullNameNow().trim()}. IQ test uchun ${currentFee.toLocaleString('ru-RU')} so'm to'ladim (to'lov №${nextPayNo()}, ${tashkentDate(0)}), tasdiqlab bera olasizmi?`);
+  link.href=`https://t.me/${ADMIN_TELEGRAM}?text=${msg}`;
 }
 
 function checkCode(){
   const val = document.getElementById('codeInput').value.trim();
   document.getElementById('codeErr').textContent='';
-  if(val === currentConfirmCode()){
+  if(validCodes().includes(val)){
     profile.payments=((profile.payments)||0)+1; saveProfile(profile);
     if(pendingAction==='retry'){ paidThisAttempt=true; currentSet=buildSet(profile.attempts||0); current=0; answers=[]; showScreen('s-quiz'); renderQuestion(); }
     else { unlockResult(); }
@@ -431,8 +588,8 @@ function checkCode(){
 function unlockResult(){
   const r=window.__result; if(!r) return;
   document.getElementById('tierLabel2').textContent=r.tier;
-  document.getElementById('tierShort').textContent=r.iq;
-  document.getElementById('fullScore').textContent=r.iq;
+  animateCount(document.getElementById('tierShort'),r.iq);
+  animateCount(document.getElementById('fullScore'),r.iq,1100);
   document.getElementById('b-logic').textContent=r.breakdown.logic+'%';
   document.getElementById('b-math').textContent=r.breakdown.math+'%';
   document.getElementById('b-verbal').textContent=r.breakdown.verbal+'%';
@@ -446,13 +603,15 @@ function unlockResult(){
 
   const cta=document.getElementById('certCta');
   if(r.iq>=120){
+    confettiBurst();
     cta.innerHTML = `<button class="btn" onclick="openCert()">🏆 Sertifikatni ko'rish</button>`;
   } else {
-    const fee = r.iq<50 ? 10000 : (r.iq<100 ? 8000 : 5000);
+    const fee = priceFor(nextPayNo());
     cta.innerHTML = `<div class="card center"><p class="note" style="margin:0 0 4px;">Sertifikat 120+ ball uchun beriladi. Uzr, hozircha yetmadi.</p></div>
-      <button class="btn" onclick="showRetryPayment(${fee})">Qayta urinish — ${fee.toLocaleString('ru-RU')} so'm</button>`;
+      <button class="btn" onclick="showRetryPayment()">Qayta urinish — ${fee.toLocaleString('ru-RU')} so'm</button>`;
   }
   showScreen('s-full');
+  loadRank();
 }
 
 function openCert(){
@@ -461,6 +620,7 @@ function openCert(){
   document.getElementById('certScore').textContent = `IQ ${r.iq}`;
   document.getElementById('certDate').textContent = new Date().toLocaleDateString('uz-UZ');
   showScreen('s-cert');
+  confettiBurst();
 }
 
 async function downloadCert(){
@@ -483,6 +643,44 @@ async function downloadCert(){
 function restart(){ initIntro(); showScreen('s-intro'); }
 
 function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function animateCount(el,target,dur){
+  dur=dur||900; const t0=performance.now();
+  (function step(t){
+    const p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(target*e);
+    if(p<1) requestAnimationFrame(step);
+  })(t0);
+}
+function newId(){
+  try{ if(crypto.randomUUID) return crypto.randomUUID(); }catch(e){}
+  return 'id'+Date.now().toString(36)+Math.random().toString(36).slice(2,10);
+}
+function submitScore(iq){
+  const ln=(profile.lastName||'').trim();
+  const nm=((profile.firstName||'').trim()+(ln?' '+ln.charAt(0).toUpperCase()+'.':'')).slice(0,30);
+  return fetch('/api/leaderboard',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:profile.id,name:nm,iq:iq})}).then(r=>r.ok).catch(()=>false);
+}
+async function loadRank(){
+  try{
+    await window.__submitP;
+    const r=await fetch('/api/leaderboard?id='+encodeURIComponent(profile.id));
+    if(!r.ok) return;
+    const d=await r.json();
+    if(!d||!d.total||!d.rank) return;
+    document.getElementById('rankLine').innerHTML=`Siz <b>${d.rank}-o'rindasiz</b> — ${d.total} ishtirokchi orasida`;
+    document.getElementById('rankList').innerHTML=d.top.map((t,i)=>`<div class="hist-row"><span>${i+1}. ${escapeHtml(t.n)}</span><span>IQ ${t.iq}</span></div>`).join('');
+    document.getElementById('rankCard').style.display='block';
+  }catch(e){}
+}
+function confettiBurst(){
+  const colors=['#8b5cf6','#2dd4bf','#f5b942','#ffffff','#ff6b6b'];
+  for(let i=0;i<36;i++){
+    const d=document.createElement('div'); d.className='confetti';
+    d.style.left=Math.random()*100+'vw'; d.style.background=colors[i%colors.length];
+    d.style.animationDelay=(Math.random()*0.6)+'s'; d.style.animationDuration=(1.8+Math.random()*1.4)+'s';
+    document.body.appendChild(d); setTimeout(()=>d.remove(),3800);
+  }
+}
 function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
 
 window.addEventListener('DOMContentLoaded', ()=>{ initIntro(); });
